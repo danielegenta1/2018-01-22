@@ -67,7 +67,18 @@ public class SerieAController
     }
 
     @FXML
-    void doTrovaCamminoVirtuoso(ActionEvent event) {
+    void doTrovaCamminoVirtuoso(ActionEvent event)
+    {
+    	if (permettiOpSuccessive)
+    	{
+    		System.out.print("Ricerco cammino virtuoso per: " + boxSquadra.getSelectionModel().getSelectedItem().getTeam());
+    		model.handleCamminoVirtuoso();
+    	}
+    	else
+    	{
+    		txtResult.clear();
+    		txtResult.appendText("Devi selezionare una squadra e creare grafo.\n");
+    	}
 
     }
     

@@ -136,4 +136,14 @@ public class Model
 		
 	}
 
+	// ricorsione? vado in ordine e considero solamente una squadra
+	public void handleCamminoVirtuoso()
+	{
+		// ottengo primo vertice del grafo
+		
+		// esiste stagione succesiva?
+		
+		// aggiungo a sol_best
+	}
+
 }
