@@ -15,7 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
-public class SerieAController {
+public class SerieAController
+{
+	boolean permettiOpSuccessive = false;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -41,19 +43,26 @@ public class SerieAController {
     @FXML
     void doSelezionaSquadra(ActionEvent event) 
     {
+    	txtResult.clear();
     	if (boxSquadra.getSelectionModel().getSelectedIndex() != -1)
-    		model.handleSquadraSelezionata(boxSquadra.getSelectionModel().getSelectedItem());
-    	else
     	{
-    		txtResult.clear();
-    		txtResult.appendText("Devi selezionare una squadra.\n");
+    		txtResult.appendText(model.handleSquadraSelezionata(boxSquadra.getSelectionModel().getSelectedItem()));
+    		permettiOpSuccessive = true;
     	}
+    	else
+    		txtResult.appendText("Devi selezionare una squadra.\n");
     }
 
     @FXML
     void doTrovaAnnataOro(ActionEvent event) 
     {
-    	model.handleAnnataOro();
+    	if (permettiOpSuccessive)
+    		txtResult.appendText(model.handleAnnataOro());    	
+		else
+    	{
+    		txtResult.clear();
+    		txtResult.appendText("Devi selezionare una squadra e creare grafo.\n");
+    	}
 
     }
 

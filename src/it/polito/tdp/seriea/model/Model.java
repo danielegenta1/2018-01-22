@@ -4,13 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.jws.WebParam.Mode;
-
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import it.polito.tdp.seriea.db.SerieADAO;
@@ -34,8 +30,8 @@ public class Model
 		return dao.listTeams();
 	}
 
-	//TODO da stampare in controller
-	public void handleSquadraSelezionata(Team selectedItem) 
+	
+	public String handleSquadraSelezionata(Team selectedItem) 
 	{
 		List<Match>result = dao.allMatchesTeam(selectedItem);
 		sh = new SeasonHistory(selectedItem);
@@ -53,11 +49,10 @@ public class Model
 			}
 		}
 		
+		String res = String.format("Storico per squadra: %s\n", selectedItem.getTeam());
 		for (int season : sh.storico.keySet())
-		{
-			System.out.println(String.format("Annata %d punti %d", season, sh.storico.get(season)));
-		}
-		
+			res += (String.format("Annata: %d - punti %d\n", season, sh.storico.get(season)));
+		return res;
 	}
 
 	private int calcolaPunti(String team, Match m)
@@ -82,9 +77,8 @@ public class Model
 		}
 	}
 
-	public void handleAnnataOro()
+	public String handleAnnataOro()
 	{
-		System.out.println("\nAnnata d'oro per " + sh.getTeam());
 		grafo = new SimpleDirectedWeightedGraph<Integer, DefaultWeightedEdge>(DefaultWeightedEdge.class);
 		Graphs.addAllVertices(this.grafo, sh.storico.keySet());
 		
@@ -137,7 +131,8 @@ public class Model
 			}
 			
 		}
-		System.out.println(seasonOro);
+		
+		return String.format("\n\nStagione oro: %d con differenza pesi: %d\n", seasonOro, oro);
 		
 	}
 
